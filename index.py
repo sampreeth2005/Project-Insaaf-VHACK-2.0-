@@ -171,34 +171,72 @@ if page == "Dashboard":
     st.dataframe(df_prioritized,hide_index=True)
 
 if page == "Add case":
-    st.write("Add a case")
+    offense_options = ["Heinous","Serious","Moderate"]
+    vulnerable_options = ["None","Woman","Child","Senior Citizen","Disabled Person"]
+
     with st.form("my_form"):
-        caseNo = st.number_input("Enter case number: ")
-        offense = st.selectbox("Select Offense type: ", ["Heinous","Serious","Moderate"])
-        vulnerable = st.selectbox("Select Vulnerable Party: ",["None","Woman","Child","Senior Citizen","Disabled Person"])
-        age = st.slider("Pick Age of Case: ",1,30)
-        bail = st.checkbox("Bail involved?")
-        bail = "Yes" if bail is True else "No"
-        trial = st.checkbox("Under trial involved?")
-        trial = "Yes" if trial is True else "No"
+        caseNo = st.number_input("Enter case number:", min_value=1, step=1)
+
+        offense = st.selectbox("Select Offense type:", offense_options)
+
+        vulnerable = st.selectbox("Select Vulnerable Party:", vulnerable_options)
+
+        age = st.slider("Pick Age of Case:", min_value=1, max_value=30)
+
+        bail_bool = st.checkbox("Bail involved?")
+        bail = "Yes" if bail_bool else "No"
+
+        trial_bool = st.checkbox("Under trial involved?")
+        trial = "Yes" if trial_bool else "No"
+
         submit = st.form_submit_button('Add Case')
 
     if submit:
-        st.write("Added new case")
-        new_case = {
-            "CaseNo": caseNo,
-            "Offense": offense,
-            "Vulnerable": vulnerable,
-            "AgeofCase": age,
-            "BailMatter" : bail,
-            "UnderTrial": trial
-        }
+        errors = []
 
-        newCaseDf = pd.DataFrame([new_case])
-        newCaseDf.to_csv("insaafdataset.csv", mode="a", header=False, index=False)
-        newCaseDf = prioritize_cases(newCaseDf)
-        df_prioritized = pd.concat([df_prioritized,newCaseDf],ignore_index=True)
-        df_prioritized = sortCases(df_prioritized)
+        try:
+            existing_df = pd.read_csv("insaafdataset.csv")
+        except FileNotFoundError:
+            existing_df = pd.DataFrame(columns=["CaseNo","Offense","Vulnerable",
+                                                 "AgeofCase","BailMatter","UnderTrial"])
+
+
+        if caseNo <= 0:
+            errors.append("Case number must be greater than 0.")
+
+        if caseNo in existing_df["CaseNo"].values:
+            errors.append("Case number already exists. Input case should not be in dataset.")
+
+        if offense not in offense_options:
+            errors.append("Invalid offense type selected.")
+
+        if vulnerable not in vulnerable_options:
+            errors.append("Invalid vulnerable party selected.")
+
+        if not (1 <= age <= 30):
+            errors.append("Age of case must be between 1 and 30.")
+
+        if len(errors) > 0:
+            for err in errors:
+                st.error(err)
+        else:
+            st.success("Added new case")
+
+            new_case = {
+                "CaseNo": caseNo,
+                "Offense": offense,
+                "Vulnerable": vulnerable,
+                "AgeofCase": age,
+                "BailMatter": bail,
+                "UnderTrial": trial
+            }
+
+            newCaseDf = pd.DataFrame([new_case])
+            newCaseDf.to_csv("insaafdataset.csv", mode="a", header=False, index=False)
+
+            newCaseDf = prioritize_cases(newCaseDf)
+            df_prioritized = pd.concat([df_prioritized, newCaseDf], ignore_index=True)
+            df_prioritized = sortCases(df_prioritized)
 
 if page == "Judge Allocation":
 
