@@ -1,12 +1,37 @@
 ﻿CaseNo,Offense,Vulnerable,AgeofCase,BailMatter,UnderTrial
 101,Heinous,None,11,Yes,Yes
-102,Serious,children,6,Yes,No
+102,Serious,Child,6,Yes,No
 103,Moderate,Senior,2,No,No
 104,Serious,Senior,7,No,Yes
 105,Heinous,Women,4,Yes,Yes
 106,Moderate,Women,9,No,No
 107,Moderate,Women,8,Yes,No
-108,Heinous,children,8,Yes,No
+108,Heinous,Child,8,Yes,No
 109,Moderate,Disabled,13,No,Yes
-110,Heinous,children,7,Yes,Yes
+110,Heinous,Child,7,Yes,Yes
 112,Heinous,Child,12,Yes,No
+113,Serious,None,10,No,Yes
+114,Serious,Child,7,No,No
+115,Moderate,Senior,6,No,No
+116,Heinous,Senior,5,Yes,Yes
+117,Moderate,Women,4,No,Yes
+118,Moderate,Women,7,Yes,No
+119,Heinous,Women,3,Yes,Yes
+120,Heinous,Child,7,No,No
+121,Moderate,Disabled,11,No,No
+122,Serious,Child,4,Yes,No
+123,Serious,Child,11,Yes,No
+124,Serious,Child,11,Yes,No
+125,Serious,Senior Citizen,9,Yes,Yes
+126,Heinous,Senior,5,No,Yes
+127,Heinous,Women,4,No,No
+128,Moderate,Women,3,Yes,No
+129,Heinous,Women,3,No,Yes
+130,Heinous,Child,7,Yes,No
+131,Moderate,Disabled,11,No,Yes
+132,Heinous,Women,2,Yes,Yes
+133,Moderate,Child,7,Yes,Yes
+134,Moderate,Child,6,No,No
+135,Heinous,Senior Citizen,4,Yes,No
+136.0,Serious,Senior Citizen,5,Yes,No
+137.0,Serious,Child,3,Yes,Yes
